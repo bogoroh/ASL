@@ -7,7 +7,9 @@
 <body>
 	<h1> BonaFide </h1>
 	<ul>
-		<li> <a href=''> {{Title}} </a></li>
+		{% for item in content %}
+            <li> <a href='{{item.urlroute}}'> {{item.title}} </a></li>
+        {% endfor %}
 	</ul>
 </body>
 </html>
