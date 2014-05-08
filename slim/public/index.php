@@ -14,14 +14,14 @@ ORM::configure("password", "root");
 
 
 
-$app-> get('/admin', function (){
+$app-> get('/admin', function () use ($app){
 	$links = ORM::for_table('content')->find_many();
-	$app->render('adminHome.html', array('link' => $links,));
+	$app->render('adminHome.html', array('content' => $links));
 
-	$app-> post('/admin/create/', function (){
+	$app-> post('/create/', function (){
 
-		$app-> post('/admin/create/post', function (){
-		if($ != null){
+		$app-> post('/post', function (){
+		if($app != null){
 				$addPage = ORM::for_table('content')->create();
 				$addPage->save();
 				$app->redirect('/admin/');
