@@ -1,27 +1,28 @@
 <?php
 require '../vendor/autoload.php';
 
+
+ORM::configure("mysql:host=localhost;dbname=bonafideContent");
+ORM::configure("username", "root");
+ORM::configure("password", "root");
+
 $app = new \Slim\Slim(array(
-'mode'=> 'developement',
+'mode'=> 'development',
 'debug'=> true,
 'templates.path'=> '../app/views',
 'view'=> new \Slim\Views\Twig()
 ));
 
-ORM::configure("mysql:host=localhost;dbname=bonifide");
-ORM::configure("username", "root");
-ORM::configure("password", "root");
 
 
-
-$app-> get('/admin', function (){
+$app-> get('/admin', function () use ($app){
 	$links = ORM::for_table('content')->find_many();
-	$app->render('adminHome.html', array('link' => $links,));
+	$app->render('adminHome.html', array('link' => $links));
 
 	$app-> post('/admin/create/', function (){
 
 		$app-> post('/admin/create/post', function (){
-		if($ != null){
+		if($app != null){
 				$addPage = ORM::for_table('content')->create();
 				$addPage->save();
 				$app->redirect('/admin/');
@@ -31,6 +32,9 @@ $app-> get('/admin', function (){
 		});
 	});
 });
+
+$app->run();
+?>
 
 
 	
